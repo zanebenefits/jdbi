@@ -13,12 +13,14 @@
  */
 package org.skife.jdbi.v2;
 
+import org.skife.jdbi.v2.tweak.ResultColumnMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import org.skife.jdbi.v2.tweak.SQLLog;
 import org.skife.jdbi.v2.tweak.StatementBuilder;
 import org.skife.jdbi.v2.tweak.StatementCustomizer;
 import org.skife.jdbi.v2.tweak.StatementLocator;
 import org.skife.jdbi.v2.tweak.StatementRewriter;
+import org.skife.jdbi.v2.util.SingleColumnMapper;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -62,6 +64,17 @@ public class Update extends SQLStatement<Update>
         finally {
             cleanup();
         }
+    }
+
+    /**
+     * Execute the statement and returns any auto-generated keys. This requires the JDBC driver to support
+     * the {@link Statement#getGeneratedKeys()} method.
+     * @param mapper the column mapper to generate the resulting key object
+     * @return the generated key or null if none was returned
+     */
+    public <GeneratedKeyType> GeneratedKeys<GeneratedKeyType> executeAndReturnGeneratedKeys(final ResultColumnMapper<GeneratedKeyType> mapper)
+    {
+        return executeAndReturnGeneratedKeys(new SingleColumnMapper<GeneratedKeyType>(mapper));
     }
 
     /**

@@ -23,7 +23,7 @@ import org.skife.jdbi.v2.TransactionStatus;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.mixins.Transactional;
 import org.skife.jdbi.v2.tweak.HandleCallback;
-import org.skife.jdbi.v2.util.IntegerMapper;
+import org.skife.jdbi.v2.util.IntegerColumnMapper;
 
 import java.io.IOException;
 
@@ -72,7 +72,7 @@ public class TestPostgresBugs
             @Override
             public Integer withHandle(Handle handle) throws Exception
             {
-                return handle.createQuery("select 2 + 2").map(IntegerMapper.FIRST).first();
+                return handle.createQuery("select 2 + 2").map(IntegerColumnMapper.PRIMITIVE).first();
             }
         });
 

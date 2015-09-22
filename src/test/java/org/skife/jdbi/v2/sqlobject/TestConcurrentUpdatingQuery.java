@@ -19,13 +19,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
-import org.skife.jdbi.v2.Query;
-import org.skife.jdbi.v2.Something;
 import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
-import org.skife.jdbi.v2.sqlobject.mixins.CloseMe;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import org.skife.jdbi.v2.util.StringMapper;
+import org.skife.jdbi.v2.util.StringColumnMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,7 +74,7 @@ public class TestConcurrentUpdatingQuery
 
         final String name = handle.createQuery("select name from something where id = :id")
                 .bind("id", 7)
-                .map(StringMapper.FIRST)
+                .map(StringColumnMapper.INSTANCE)
                 .first();
 
         assertEquals("Tom", name);

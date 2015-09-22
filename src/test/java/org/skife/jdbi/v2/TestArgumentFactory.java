@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.tweak.Argument;
 import org.skife.jdbi.v2.tweak.ArgumentFactory;
-import org.skife.jdbi.v2.util.StringMapper;
+import org.skife.jdbi.v2.util.StringColumnMapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -61,7 +61,7 @@ public class TestArgumentFactory
           .bind("name", new Name("Brian", "McCallister"))
           .execute();
 
-        String full_name = h.createQuery("select name from something where id = 7").map(StringMapper.FIRST).first();
+        String full_name = h.createQuery("select name from something where id = 7").map(StringColumnMapper.INSTANCE).first();
 
         assertThat(full_name, equalTo("Brian McCallister"));
         h2.close();
@@ -76,7 +76,7 @@ public class TestArgumentFactory
          .bind("name", new Name("Brian", "McCallister"))
          .execute();
 
-        String full_name = h.createQuery("select name from something where id = 7").map(StringMapper.FIRST).first();
+        String full_name = h.createQuery("select name from something where id = 7").map(StringColumnMapper.INSTANCE).first();
 
         assertThat(full_name, equalTo("Brian McCallister"));
     }
@@ -102,7 +102,7 @@ public class TestArgumentFactory
         batch.execute();
 
         List<String> rs = h.createQuery("select name from something order by id")
-                           .map(StringMapper.FIRST)
+                           .map(StringColumnMapper.INSTANCE)
                            .list();
 
         assertThat(rs.get(0), equalTo("Brian McCallister"));

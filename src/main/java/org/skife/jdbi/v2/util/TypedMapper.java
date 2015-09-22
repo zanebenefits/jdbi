@@ -23,7 +23,7 @@ import java.sql.SQLException;
  * Convenience base class for implementing typed result set mappers. Provides
  * frequently used functionality.
  *
- * @deprecated Implement and register {@link org.skife.jdbi.v2.tweak.ResultColumnMapper} instead.
+ * @deprecated Existing mappers should be migrated to {@link org.skife.jdbi.v2.tweak.ResultColumnMapper}.
  */
 @Deprecated
 public abstract class TypedMapper<T> implements ResultSetMapper<T>
